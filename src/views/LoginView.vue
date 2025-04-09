@@ -1,17 +1,15 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import Button from '../components/Button.vue'
-import Input from '../components/Input.vue'
 
-const current = ref<number>(1)
+const current = ref<string>('login')
 const inputEmail = ref<string>('')
 
 const tabs = [
-  { id: 1, title: 'ログイン', content: 'ログイン画面' },
-  { id: 2, title: '会員登録', content: '会員登録画面' },
+  { key: 'login', title: 'ログイン', content: 'ログイン画面', content:  },
+  { key: 'register', title: '会員登録', content: '会員登録画面' },
 ]
 
-const toggleTab = (id: number) => {
+const toggleTab = (id: string) => {
   current.value = id
 }
 
@@ -23,26 +21,15 @@ const handleLoginSubmit = () => {}
     <div class="form-container">
       <div class="login">
         <ul>
-          <li v-for="tab in tabs" :key="tab.id">
-            <div @click="toggleTab(tab.id)" :class="{ select: current === tab.id }">
+          <li v-for="tab in tabs" :key="tab.key">
+            <div @click="toggleTab(tab.key)" :class="{ select: current === tab.id }">
               {{ tab.title }}
             </div>
           </li>
         </ul>
         <div>
-          <form @submit.prevent="handleLoginSubmit" v-show="current === 1">
-            <div class="input-field">
-              <label for="">メールアドレス</label>
-              <Input type="text" placeholder="test@example.com" v-model="inputEmail" />
-            </div>
-            <div class="input-field">
-              <label for="email">パスワード</label>
-              <Input type="text" placeholder="komugi0510" v-model="inputEmail" />
-            </div>
-            <a href="">パスワードをお忘れの方</a>
-            <Button name="ログインする" />
-          </form>
-          <div v-show="current === 2">会員登録</div>
+          <LoginForm v-show="current === 'login'" />
+          <div v-show="current === 'register'">会員登録</div>
         </div>
       </div>
     </div>
