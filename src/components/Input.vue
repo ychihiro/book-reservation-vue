@@ -1,17 +1,12 @@
 <script setup lang="ts">
+import type { InputHTMLAttributes } from 'vue'
+
 const { type } = defineProps<{
   id?: string
-  type: 'text' | 'number'
+  type: InputHTMLAttributes['type']
   placeholder: string
   className?: string
 }>()
-
-// const { breadcrumbs } = defineProps<{
-//   breadcrumbs: {
-//     name: string
-//     path: string | null
-//   }[]
-// }>()
 
 const model = defineModel<string | number>()
 </script>
