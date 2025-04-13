@@ -2,9 +2,8 @@
 import { ref } from 'vue'
 import Button from '@/components/Button.vue'
 import Input from '@/components/Input.vue'
-// import axios, { type AxiosResponse } from 'axios'
-import axios from '@/plugins/axios'
 import type { LoginRequest } from '@/interfaces/LoginRequest'
+import { login } from '@/features/auth/api/login'
 
 const credentials = ref<LoginRequest>({
   email: '',
@@ -12,16 +11,12 @@ const credentials = ref<LoginRequest>({
 })
 
 const handleLoginSubmit = async () => {
-  await axios.get('http://localhost/sanctum/csrf-cookie')
-  try {
-    const response = await axios.post('/api/login', {
+  login({
+    body: {
       email: credentials.value.email,
       password: credentials.value.password,
-    })
-    console.log(response.data)
-  } catch (error) {
-    console.log('login error', error)
-  }
+    },
+  })
 }
 </script>
 
@@ -37,8 +32,6 @@ const handleLoginSubmit = async () => {
     </div>
     <a href="" class="forgot-password">パスワードをお忘れの方</a>
     <Button name="ログインする" />
-    <p>{{ credentials.email }}</p>
-    <p>{{ credentials.password }}</p>
   </form>
 </template>
 

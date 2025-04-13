@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import Button from '../components/Button.vue'
-import Breadcrumbs from '../components/Breadcrumbs.vue'
+import Breadcrumbs, { type BreadcrumbItem } from '../components/Breadcrumbs.vue'
 import axios, { type AxiosResponse } from 'axios'
 import type { Book } from '../interfaces/Book'
 
@@ -10,19 +10,13 @@ const router = useRoute()
 const { params } = router
 
 const book = ref<Book | null>(null)
-const breadcrumbs = ref<
-  {
-    name: string
-    path: string | null
-  }[]
->([
+const breadcrumbs = ref<BreadcrumbItem[]>([
   {
     name: 'TOP',
     path: '/',
   },
   {
     name: '本を探す',
-    path: '/search',
   },
 ])
 
@@ -37,7 +31,6 @@ onMounted(async () => {
     // パンクズリスト
     breadcrumbs.value.push({
       name: book.value.title,
-      path: null,
     })
   } catch (error) {
     console.error('データ取得に失敗しました', error)

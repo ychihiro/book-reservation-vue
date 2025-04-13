@@ -13,4 +13,15 @@ axios.interceptors.request.use((request) => {
   return request
 })
 
+axios.interceptors.response.use((request) => {
+  // エラーだった場合
+  if (request.status === 500) {
+    console.log('Server Error')
+  } else if (request.status === 401) {
+    console.log('Unauthorized')
+  }
+
+  return request
+})
+
 export default axios
