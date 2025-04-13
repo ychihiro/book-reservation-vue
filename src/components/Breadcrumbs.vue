@@ -1,24 +1,23 @@
 <script setup lang="ts">
-const { breadcrumbs } = defineProps<{
-  breadcrumbs: {
-    name: string
-    path: string | null
-  }[]
-}>()
+export interface BreadcrumbItem {
+  name: string
+  path?: string
+}
+
+const { breadcrumbs } = defineProps<{ breadcrumbs: BreadcrumbItem[] }>()
+
+const isLastItem = (index: number) => breadcrumbs.length === index + 1
 </script>
 
 <template>
   <div class="breadcrumbs">
     <ul>
-      <li v-for="(v, key) in breadcrumbs" :key>
-        <div v-if="v.path">
-          <router-link :to="v.path">
-            <span>{{ v.name }}</span>
+      <li v-for="(item, index) in breadcrumbs" :key="index">
+        <div>
+          <router-link :to="item.path ?? ''">
+            <span :class="isLastItem(index) && 'current-link'">{{ item.name }}</span>
           </router-link>
-          <span>></span>
-        </div>
-        <div v-else>
-          <span class="current-link">{{ v.name }}</span>
+          <span v-if="!isLastItem(index)">></span>
         </div>
       </li>
     </ul>
