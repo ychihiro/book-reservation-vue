@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios, { type AxiosResponse } from 'axios'
+import axios from '@/plugins/axios'
+// import axios, { type AxiosResponse } from 'axios'
 import SearchInput from '../components/SearchInput.vue'
 import Button from '../components/Button.vue'
 import CardItem from '../components/CardItem.vue'
-// import getBooks from '../api/getBooks'
 import type { Book } from '../types/Book'
 
 const inputText = ref<string>('')
@@ -21,7 +21,7 @@ function handleSubmit(): void {}
 
 onMounted(async () => {
   try {
-    const response: AxiosResponse = await axios.get('http://localhost/api/books')
+    const response = await axios.get('http://localhost/api/books')
     books.value = response.data.data
   } catch (error) {
     console.error('データ取得に失敗しました', error)

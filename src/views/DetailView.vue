@@ -3,9 +3,8 @@ import { useRoute } from 'vue-router'
 import { ref, onMounted } from 'vue'
 import Button from '../components/Button.vue'
 import Breadcrumbs from '../components/Breadcrumbs.vue'
-import type { AxiosResponse } from 'axios'
-import axios from 'axios'
-import type { Book } from '../types/Book'
+import axios, { type AxiosResponse } from 'axios'
+import type { Book } from '../interfaces/Book'
 
 const router = useRoute()
 const { params } = router
