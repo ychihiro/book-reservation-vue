@@ -21,7 +21,7 @@ function handleSubmit(): void {}
 
 onMounted(async () => {
   try {
-    const response = await axios.get('http://localhost/api/books')
+    const response = await axios.get('/api/books')
     books.value = response.data.data
   } catch (error) {
     console.error('データ取得に失敗しました', error)

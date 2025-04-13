@@ -14,7 +14,7 @@ const credentials = ref<LoginRequest>({
 const handleLoginSubmit = async () => {
   await axios.get('http://localhost/sanctum/csrf-cookie')
   try {
-    const response = await axios.post('/login', {
+    const response = await axios.post('/api/login', {
       email: credentials.value.email,
       password: credentials.value.password,
     })
