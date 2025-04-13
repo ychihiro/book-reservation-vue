@@ -22,7 +22,9 @@ const breadcrumbs = ref<BreadcrumbItem[]>([
 
 onMounted(async () => {
   const bookId = params.id
+  // IMO: try catchはなくても良いかも
   try {
+    // TODO: features/book/apiに記述 src/features/auth/api/login.tsを参照
     const response: AxiosResponse = await axios.get(`http://localhost/api/books/${bookId}`)
     book.value = response.data.data
 
@@ -44,6 +46,7 @@ onMounted(async () => {
       <Breadcrumbs :breadcrumbs="breadcrumbs" />
     </div>
     <div class="main-content">
+      <!-- IMO: 本に関するUIはsrc/features/book/componentsに切り出しても良いかも -->
       <div class="detail">
         <div>
           <div class="detail__img">
@@ -76,12 +79,14 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+/* FIXME: このスタイルは不要？ */
 header {
   display: none;
 }
 main {
   background-color: #f9f5ee;
 }
+/* FIXME: このスタイルは不要？ */
 .breadcrumbs {
   /* width: 1000px; */
 }

@@ -2,7 +2,6 @@
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import axios from '@/plugins/axios'
-// import axios, { type AxiosResponse } from 'axios'
 import SearchInput from '../components/SearchInput.vue'
 import Button from '../components/Button.vue'
 import CardItem from '../components/CardItem.vue'
@@ -21,6 +20,7 @@ function handleSubmit(): void {}
 
 onMounted(async () => {
   try {
+    // TODO: src/features/book/apiに記述 src/features/auth/api/login.tsを参照
     const response = await axios.get('/api/books')
     books.value = response.data.data
   } catch (error) {
@@ -36,6 +36,8 @@ onMounted(async () => {
         <SearchInput type="text" placeholder="書籍名、キーワード" v-model="inputText" />
         <Button name="検索" />
       </form>
+      <!-- IMO: 本に関するUIはsrc/features/book/componentsに切り出しても良いかも -->
+      <!-- IMO: どのようなカードであるかを説明するためにbookという名詞を加え「BookCardItem」や「RentalBookCardItem」などが良いと考えた -->
       <div class="card">
         <CardItem v-for="(book, key) in books" :key="key" :book @on-click-card="clickCard" />
       </div>
@@ -44,6 +46,7 @@ onMounted(async () => {
 </template>
 
 <style scoped>
+/* FIXME: 毎回このような実装(100vh - ヘッダーの高さ)を行うことを考えると辛いため、slotを利用したLayoutコンポーネントのようなものを作成したい */
 main {
   /* 100vh - ヘッダーの高さ; */
   min-height: calc(100vh - 69.5px);

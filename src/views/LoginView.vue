@@ -1,23 +1,24 @@
 <script setup lang="ts">
+// IMO: このView名はAuthViewに変更した方が良い説
 import { ref } from 'vue'
 import LoginForm from '@/features/auth/components/LoginForm.vue'
 import RegisterForm from '@/features/auth/components/RegisterForm.vue'
 
-const current = ref<'login' | 'register'>('login')
+const TABS = {
+  LOGIN: {
+    key: 'login',
+    name: 'ログイン',
+  },
+  REGISTER: {
+    key: 'register',
+    name: '会員登録',
+  },
+} as const
 
-interface Tab {
-  key: 'login' | 'register'
-  name: string
-}
+type TabKey = (typeof TABS)[keyof typeof TABS]['key']
 
-const tabs: Tab[] = [
-  { key: 'login', name: 'ログイン' },
-  { key: 'register', name: '会員登録' },
-]
-
-const toggleTab = (key: 'login' | 'register') => {
-  current.value = key
-}
+// FIXME: currentをcurrentTabKeyなどに変更したい
+const current = ref<TabKey>(TABS.LOGIN.key)
 </script>
 
 <template>
@@ -25,17 +26,20 @@ const toggleTab = (key: 'login' | 'register') => {
     <div class="form-container">
       <div class="login">
         <ul>
-          <li v-for="tab in tabs" :key="tab.key">
-            <div @click="toggleTab(tab.key)" :class="{ select: current === tab.key }">
+          <!-- TODO: タブコンポーネントの作成 -->
+          <li v-for="tab in TABS" :key="tab.key">
+            <div @click="current = tab.key" :class="{ select: current === tab.key }">
               {{ tab.name }}
             </div>
           </li>
         </ul>
         <div>
-          <div v-show="current === 'login'">
+          <!-- TODO: 'login'をTABS.LOGIN.keyに置き換える -->
+          <div v-show="current === TABS.LOGIN.key">
             <LoginForm />
           </div>
-          <div v-show="current === 'register'">
+          <!-- TODO: 'register'をTABS.REGISTER.keyに置き換える -->
+          <div v-show="current === TABS.REGISTER.key">
             <RegisterForm />
           </div>
         </div>
