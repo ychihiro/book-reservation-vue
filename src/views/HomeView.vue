@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
-import axios from '@/plugins/axios'
 import SearchInput from '../components/SearchInput.vue'
 import Button from '../components/Button.vue'
 import CardItem from '../components/CardItem.vue'
-import type { Book } from '../types/Book'
+import type { Book } from '@/features/book/types/Book'
+import { getBooks } from '@/features/book/api/getBooks'
 
 const inputText = ref<string>('')
 const router = useRouter()
@@ -19,13 +19,8 @@ function clickCard(id: number): void {
 function handleSubmit(): void {}
 
 onMounted(async () => {
-  try {
-    // TODO: src/features/book/apiに記述 src/features/auth/api/login.tsを参照
-    const response = await axios.get('/api/books')
-    books.value = response.data.data
-  } catch (error) {
-    console.error('データ取得に失敗しました', error)
-  }
+  const response = await getBooks()
+  books.value = response.data.data
 })
 </script>
 
