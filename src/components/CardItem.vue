@@ -10,7 +10,7 @@ const { book } = defineProps<{
 
 <template>
   <!-- IMO: onClickCardカード以外のクリックイベントを親コンポーネントに伝える必要があれば有効であると思うが、基本的にはカードのクリックのみが親に伝えるイベントとして想定されそうなので、onClickで十分そう -->
-  <div @click="$emit('onClickCard', book.id)" class="card__item">
+  <div @click="$emit('onClick', book.id)" class="card__item">
     <div class="card__image">
       <img :src="book.path" alt="画像" />
     </div>
